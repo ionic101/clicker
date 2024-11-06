@@ -1,3 +1,3 @@
-TITLE = 'Супер пупер кликер'
+TITLE = 'Кликер'
 SCREEN_WIDTH = 1024
 SCREEN_HEIGHT = 720
