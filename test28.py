@@ -1,6 +1,8 @@
 import tkinter as tk
 from settings import *
 from typing import Tuple
+import sys
+import os
 
 
 class Clicker(tk.Tk):
@@ -8,7 +10,8 @@ class Clicker(tk.Tk):
         self.root = tk.Tk()
         self.root.title(TITLE)
         self.root.geometry(f'{SCREEN_WIDTH}x{SCREEN_HEIGHT}')
-        self.bg_image = tk.PhotoImage(file='source/bg.png')
+        base_path = sys._MEIPASS if getattr(sys, 'frozen', False) else os.path.abspath('.')
+        self.bg_image = tk.PhotoImage(file=os.path.join(base_path, 'source', 'bg.png'))
 
     def display_bg(self) -> None:
         bg_label = tk.Label(self.root, image=self.bg_image)
@@ -23,11 +26,17 @@ class Clicker(tk.Tk):
         label = tk.Label(self.root, text='Сорян <3\nИгра всё ещё в разработке',
                          font=('Arial', 20, 'bold'), bg='black', fg='white')
         label.pack()
+    
+    def display_title(self) -> None:
+        title_label = tk.Label(self.root, text=TITLE, font=('Arial', 40, 'bold'),
+                            bg='black', fg='white')
+        title_label.place(x=SCREEN_WIDTH // 2 - title_label.winfo_width(), y=200)
+        self.root.update_idletasks()
+        title_width = title_label.winfo_width()
+        title_label.place(x=SCREEN_WIDTH // 2 - title_width // 2, y=200)
 
     def display_menu(self) -> None:
-        title_label = tk.Label(self.root, text=TITLE, font=('Arial', 40, 'bold'),
-                               bg='black', fg='white')
-        title_label.place(x=SCREEN_WIDTH // 2 - 260, y=200)
+        self.display_title()
         BUTTON_WIDHT: int = 300
         BUTTON_HEIGHT: int = 100
         BUTTON_FONT: Tuple[str, int, str] = ('Arial', 20, 'bold')
